@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:money_note/constant/hexcolor.dart';
+import 'package:money_note/home/homepage.dart';
 import 'package:money_note/model/account.dart';
 import 'package:money_note/register/register.dart';
 // import 'package:http/http.dart';
@@ -21,7 +22,8 @@ class _LoginState extends State<Login> {
 
   bool isLoading = false;
   bool loading = false;
-
+  String userName = '';
+  String password = '';
   @override
   void initState() {
     super.initState();
@@ -36,6 +38,44 @@ class _LoginState extends State<Login> {
     await storage.ready;
     Map<String, dynamic> data = storage.getItem('account_value');
     Account account =  Account.fromJson(data);
+    if(userName != '' && password != '') {
+      if(userName != account.userName || password != account.password) {
+        return showDialog(context: context, builder: (context) {
+          return AlertDialog(
+            title: const Text('Thanks!'),
+            content: Text(
+                'Tên tài khoản hoặc mật khẩu không chính xác'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        });
+      } else {
+        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => HomePage()));
+      }
+
+    } else {
+      return showDialog(context: context, builder: (context) {
+        return AlertDialog(
+          title: const Text('Thanks!'),
+          content: Text(
+              'Vui lòng nhập đầy đủ tên tài khoản và mật khẩu'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      });
+    }
     return account;
   }
 
@@ -94,6 +134,11 @@ class _LoginState extends State<Login> {
                                         BorderRadius.all(Radius.circular(30))),
                               ),
                               cursorColor: Colors.black87,
+                                onChanged: (text) {
+                                  setState(() {
+                                    userName = text;
+                                  });
+                                }
                             )),
                         Padding(
                             padding: EdgeInsets.all(15),
@@ -111,6 +156,11 @@ class _LoginState extends State<Login> {
                                         BorderRadius.all(Radius.circular(30))),
                               ),
                               cursorColor: Colors.black87,
+                                onChanged: (text) {
+                                  setState(() {
+                                    password = text;
+                                  });
+                                }
                             )),
                         Padding(padding: EdgeInsets.only(bottom: 20)),
                         button('LOG IN', () {
