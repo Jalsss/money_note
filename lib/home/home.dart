@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:money_note/constant/hexcolor.dart';
+import 'package:money_note/dialog/add_dialog.dart';
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
@@ -27,10 +28,14 @@ class _HomeState extends State<Home> {
             child: SafeArea(
               child: Column(
                 children: [
-                  TextButton(onPressed: (){
-
+                  TextButton(
+                    onPressed: (){
+                    showDialog(context: context, builder: (context) {
+                      return AddDialog();
+                    });
                   }, child: Container(
                       decoration: BoxDecoration(
+                        color: Colors.white,
                         border: Border(
                           bottom: BorderSide( //                   <--- left side
                             color: Colors.black26,
@@ -40,7 +45,15 @@ class _HomeState extends State<Home> {
                             color: Colors.black26,
                             width: 1.0,
                           ),
-                        )
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
                       ),
                       padding: EdgeInsets.all(5),
                       child: SizedBox(
@@ -48,9 +61,11 @@ class _HomeState extends State<Home> {
                         height: 50,
                         child: Row(
                           children: [
-                            Icon(Foundation.plus),
+                            Icon(Foundation.plus,color: Colors.black87,),
                             Container(width: 10,),
-                            Text('Thêm khoản thu chi',)
+                            Text('Add Target', style: TextStyle(
+                              color: Colors.black87
+                            ),)
                           ],
                         ),
                       )),
