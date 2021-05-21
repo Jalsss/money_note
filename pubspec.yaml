@@ -27,6 +27,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_icons: ^1.1.0
   localstorage: ^3.0.6
+  fl_chart: ^0.36.1
 
 dev_dependencies:
   flutter_test:
