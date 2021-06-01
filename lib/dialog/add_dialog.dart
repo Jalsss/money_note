@@ -40,6 +40,14 @@ class _AddDialogState extends State<AddDialog> {
     var add = widget.add;
     add();
     closeDialog();
+    return showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            title: Text('Thông báo'),
+            content: Text('Thêm thành công'),
+          );
+        });
   }
   ButtonStyle buttonStyle = ButtonStyle(
     backgroundColor:
