@@ -345,7 +345,7 @@ class _HomeState extends State<Home> {
                       ),
                       Text(
                         ex.total.toString() + ' đ',
-                        style: TextStyle(color: Colors.green),
+                        style: TextStyle(color: Colors.red),
                       )
                     ],
                   ),
