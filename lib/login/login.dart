@@ -37,14 +37,35 @@ class _LoginState extends State<Login> {
   login() async {
     await storage.ready;
     Map<String, dynamic> data = storage.getItem('account_value');
-    Account account =  Account.fromJson(data);
-    if(userName != '' && password != '') {
-      if(userName != account.userName || password != account.password) {
+    if(data != null) {
+      Account account = Account.fromJson(data);
+      if (account != null && userName != '' && password != '') {
+        if (userName != account.userName || password != account.password) {
+          return showDialog(context: context, builder: (context) {
+            return AlertDialog(
+              title: const Text('Thanks!'),
+              content: Text(
+                  'Tên tài khoản hoặc mật khẩu không chính xác'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          });
+        } else {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        }
+      } else {
         return showDialog(context: context, builder: (context) {
           return AlertDialog(
             title: const Text('Thanks!'),
             content: Text(
-                'Tên tài khoản hoặc mật khẩu không chính xác'),
+                'Vui lòng nhập đầy đủ tên tài khoản và mật khẩu'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -55,16 +76,13 @@ class _LoginState extends State<Login> {
             ],
           );
         });
-      } else {
-        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => HomePage()));
       }
-
     } else {
       return showDialog(context: context, builder: (context) {
         return AlertDialog(
           title: const Text('Thanks!'),
           content: Text(
-              'Vui lòng nhập đầy đủ tên tài khoản và mật khẩu'),
+              'Tên tài khoản hoặc mật khẩu không chính xác'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -76,7 +94,6 @@ class _LoginState extends State<Login> {
         );
       });
     }
-    return account;
   }
 
   @override

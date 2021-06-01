@@ -38,4 +38,16 @@ class ImEx {
   int id;
   Import im;
   Export ex;
+  ImEx({this.id, this.im, this.ex});
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'ex': ex,
+    'im': im,
+  };
+
+  factory ImEx.fromJson(Map<String, dynamic> json) {
+    return ImEx(id: json['id'],
+        im: json['im'] is Import ? json['im'] : Import.fromJson(json['im']), ex: json['ex'] is Export ? json['ex'] : Export.fromJson(json['ex']));
+  }
 }

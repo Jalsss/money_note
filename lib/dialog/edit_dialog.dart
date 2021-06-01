@@ -5,42 +5,85 @@ import 'package:localstorage/localstorage.dart';
 import 'package:money_note/constant/hexcolor.dart';
 import 'package:money_note/model/im_ex.dart';
 
-class AddDialog extends StatefulWidget {
+// ignore: must_be_immutable
+class EditDialog extends StatefulWidget {
   Function() add;
-  AddDialog({Key key,this.add}) : super(key: key);
+  String nameEdit;
+  String totalEdit;
+  int idEdit;
+  bool isEx;
+  EditDialog({Key key,this.add, this.idEdit, this.totalEdit, this.nameEdit, this.isEx}) : super(key: key);
 
   @override
-  _AddDialogState createState() => _AddDialogState();
+  _EditDialogState createState() => _EditDialogState();
 }
 
-class _AddDialogState extends State<AddDialog> {
+class _EditDialogState extends State<EditDialog> {
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController totalController = new TextEditingController();
   static LocalStorage storage = new LocalStorage('account');
   String name;
   String total;
+  int id;
   int i =1;
 
-  closeDialog() {
+
+  closeDialog() async {
+
+    //await storage.deleteItem('target' + id.toString());
     Navigator.of(context, rootNavigator: true).pop();
   }
+
   addData() async {
     await storage.ready;
-    var data = await storage.getItem('target1');
-    while (data != null) {
-      data = await storage.getItem('target' + (i+1).toString());
-      setState(() {
-        i ++;
-      });
-    }
+    Map<String, dynamic> data = await storage.getItem('target' + id.toString());
     if(name != null && total != null) {
-      Import im = new Import(id: i, name: name, total: double.parse(total));
-      Export ex = new Export(id: i, name: name, total: 0);
-      ImEx ie = new ImEx(id: i, im : im, ex : ex);
-      await storage.setItem('target' + (i).toString(), ie);
+      if (widget.isEx) {
+        Import im = ImEx
+            .fromJson(data)
+            .im;
+        Export ex = new Export(id: ImEx
+            .fromJson(data)
+            .id, name: name, total: double.parse(total));
+        ImEx ie = new ImEx(id: ImEx
+            .fromJson(data)
+            .id, im: im, ex: ex);
+        await storage.deleteItem('target' + id.toString());
+        await storage.setItem('target' + id.toString(), ie);
+      } else {
+        Import im = new Import(id: ImEx
+            .fromJson(data)
+            .id, name: name, total: double.parse(total));
+        Export ex = ImEx
+            .fromJson(data)
+            .ex;
+        ImEx ie = new ImEx(id: ImEx
+            .fromJson(data)
+            .id, im: im, ex: ex);
+        await storage.deleteItem('target' + id.toString());
+        await storage.setItem('target' + id.toString(), ie);
+      }
     }
     var add = widget.add;
     add();
     closeDialog();
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+  getData() {
+    setState(() {
+      name = widget.nameEdit;
+      total = widget.totalEdit;
+      id = widget.idEdit;
+      nameController.text = widget.nameEdit;
+      totalController.text = widget.totalEdit;
+    });
+  }
+
   ButtonStyle buttonStyle = ButtonStyle(
     backgroundColor:
         MaterialStateColor.resolveWith((states) => Colors.transparent),
@@ -82,7 +125,7 @@ class _AddDialogState extends State<AddDialog> {
                                 width: MediaQuery.of(context).size.width * 0.92,
                                 margin: EdgeInsets.only(top: 20, bottom: 20),
                                 child: Text(
-                                  'Add Target',
+                                  'Edit Target',
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold),
@@ -97,6 +140,7 @@ class _AddDialogState extends State<AddDialog> {
                                   )),
                             ]),
                             TextField(
+                              controller: nameController,
                               decoration: InputDecoration(
                                 border: UnderlineInputBorder(),
                                 alignLabelWithHint: false,
@@ -116,6 +160,7 @@ class _AddDialogState extends State<AddDialog> {
                               height: 5,
                             ),
                             TextField(
+                              controller:totalController,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 border: UnderlineInputBorder(),
@@ -147,7 +192,7 @@ class _AddDialogState extends State<AddDialog> {
                                   border: Border(
                                       top: BorderSide(color: Colors.black26))),
                               child: Center(
-                                child: Text('Cancel',
+                                child: Text('Xóa',
                                     style: TextStyle(color: Colors.red)),
                               ),
                             ),
@@ -168,7 +213,7 @@ class _AddDialogState extends State<AddDialog> {
                                   border: Border(
                                       top: BorderSide(color: Colors.black26))),
                               child: Center(
-                                child: Text('Add'),
+                                child: Text('Edit'),
                               ),
                             ),
                             style: buttonStyle)

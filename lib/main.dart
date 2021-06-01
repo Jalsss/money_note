@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 
 import 'login/login.dart';
 
-void main() {
+void main(){
+  data() async {
+
+    LocalStorage storage = new LocalStorage('account');
+    await storage.ready;
+    var color = await storage.getItem('color');
+    if(color == null){
+      await storage.setItem('color','#ffa500');
+    }
+  }
+  data();
   runApp(
+
       MaterialApp(
         theme: ThemeData(
           brightness: Brightness.light,

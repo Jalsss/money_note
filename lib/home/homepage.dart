@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:money_note/constant/hexcolor.dart';
 import 'package:money_note/home/analysis.dart';
 import 'package:money_note/home/home.dart';
@@ -15,6 +16,24 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
+  LocalStorage storage = new LocalStorage('account');
+  static var color = '#ffa500';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getColor();
+  }
+  getColor() async {
+    await storage.ready;
+    var colors =  await storage.getItem('color');
+    if(colors != null){
+      setState(() {
+        color = colors;
+      });
+    }
+  }
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
     Analysis(),
@@ -24,7 +43,8 @@ class _HomePageState extends State<HomePage> {
     color: Colors.white,
   );
   final Shader linearGradient = LinearGradient(
-    colors: <Color>[HexColor.fromHex('#ff0000'), HexColor.fromHex('#faf2d4')],
+    colors: <Color>[ color == '#ff0000'? HexColor.fromHex('#ff0000') : HexColor.fromHex('#FFFF00'),
+      color == '#ff0000'? HexColor.fromHex('#faf2d4') : HexColor.fromHex('#FaFF00')],
   ).createShader(Rect.fromLTWH(90.0, 0.0, 200.0, 70.0));
 
   Future<bool> getData() async {
@@ -45,8 +65,8 @@ class _HomePageState extends State<HomePage> {
           foreground: Paint()..shader = linearGradient
       ),),
       centerTitle: false,
-      backgroundColor: HexColor.fromHex('#ffa500'),
-      shadowColor: HexColor.fromHex('#ffa500'),
+      backgroundColor: HexColor.fromHex(color),
+      shadowColor: HexColor.fromHex(color),
       elevation: 0,
     );
   }
