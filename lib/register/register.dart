@@ -112,144 +112,149 @@ class _RegisterState extends State<Register> {
                   ],
                 )),
             child: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.2),
-                      child: Center(
-                        child: Text(
-                          'Money save',
-                          style: TextStyle(
-                            fontSize: 48.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )),
-
-                  Container(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                  child: SingleChildScrollView(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                            padding: EdgeInsets.all(15),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
-                                alignLabelWithHint: false,
-                                contentPadding: EdgeInsets.all(20.0),
-                                hintText: 'Enter your name...',
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
+                        Container(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.2),
+                            child: Center(
+                              child: Text(
+                                'Money save',
+                                style: TextStyle(
+                                  fontSize: 48.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
-                              cursorColor: Colors.black87,
-                              onChanged: (text) {
-                                setState(() {
-                                  name = text;
-                                });
-                              },
                             )),
-                        Padding(
-                            padding: EdgeInsets.all(15),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
-                                alignLabelWithHint: false,
-                                contentPadding: EdgeInsets.all(20.0),
-                                hintText: 'Enter your username....',
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
-                              ),
-                              cursorColor: Colors.black87,
-                              onChanged: (text) {
-                                setState(() {
-                                  userName = text;
-                                });
-                              },
-                            )),
-                        Padding(
-                            padding: EdgeInsets.all(15),
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
-                                alignLabelWithHint: false,
-                                contentPadding: EdgeInsets.all(20.0),
-                                hintText: 'Enter your password....',
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
-                              ),
-                              cursorColor: Colors.black87,
-                              onChanged: (text) {
-                                setState(() {
-                                  password = text;
-                                });
-                              },
-                            )),
-                        Padding(
-                            padding: EdgeInsets.all(15),
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
-                                alignLabelWithHint: false,
-                                contentPadding: EdgeInsets.all(20.0),
-                                hintText: 'Re Enter your password...',
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(30))),
-                              ),
-                              cursorColor: Colors.black87,
-                              onChanged: (text) {
-                                setState(() {
-                                  rePassword = text;
-                                });
-                              },
-                            )),
-                        Padding(padding: EdgeInsets.only(bottom: 20)),
-                        button('REGISTER', () {
-                          register();
-                        }),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("If you have account ? "),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
-                                },
-                                child: Text('Login now!',style: TextStyle(decoration: TextDecoration.underline,),),
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                    MaterialStateColor.resolveWith(
-                                            (states) => Colors.transparent),
-                                    padding: MaterialStateProperty.resolveWith(
-                                            (states) =>
-                                            EdgeInsets.fromLTRB(0, 0, 0, 0)),
-                                    shadowColor: MaterialStateColor.resolveWith(
-                                            (states) => Colors.transparent),
-                                    overlayColor:
-                                    MaterialStateColor.resolveWith(
-                                            (states) => Colors.transparent)))
-                          ],
+
+                        Container(
+                          child: Column(
+                            children: [
+                              Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(30))),
+                                      alignLabelWithHint: false,
+                                      contentPadding: EdgeInsets.all(20.0),
+                                      hintText: 'Enter your name...',
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(30))),
+                                    ),
+                                    cursorColor: Colors.black87,
+                                    onChanged: (text) {
+                                      setState(() {
+                                        name = text;
+                                      });
+                                    },
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(30))),
+                                      alignLabelWithHint: false,
+                                      contentPadding: EdgeInsets.all(20.0),
+                                      hintText: 'Enter your username....',
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(30))),
+                                    ),
+                                    cursorColor: Colors.black87,
+                                    onChanged: (text) {
+                                      setState(() {
+                                        userName = text;
+                                      });
+                                    },
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: TextField(
+                                    obscureText: true,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(30))),
+                                      alignLabelWithHint: false,
+                                      contentPadding: EdgeInsets.all(20.0),
+                                      hintText: 'Enter your password....',
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(30))),
+                                    ),
+                                    cursorColor: Colors.black87,
+                                    onChanged: (text) {
+                                      setState(() {
+                                        password = text;
+                                      });
+                                    },
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: TextField(
+                                    obscureText: true,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(30))),
+                                      alignLabelWithHint: false,
+                                      contentPadding: EdgeInsets.all(20.0),
+                                      hintText: 'Re Enter your password...',
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(30))),
+                                    ),
+                                    cursorColor: Colors.black87,
+                                    onChanged: (text) {
+                                      setState(() {
+                                        rePassword = text;
+                                      });
+                                    },
+                                  )),
+                              Padding(padding: EdgeInsets.only(bottom: 20)),
+                              button('REGISTER', () {
+                                register();
+                              }),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("If you have account ? "),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
+                                      },
+                                      child: Text('Login now!',style: TextStyle(decoration: TextDecoration.underline,),),
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                          MaterialStateColor.resolveWith(
+                                                  (states) => Colors.transparent),
+                                          padding: MaterialStateProperty.resolveWith(
+                                                  (states) =>
+                                                  EdgeInsets.fromLTRB(0, 0, 0, 0)),
+                                          shadowColor: MaterialStateColor.resolveWith(
+                                                  (states) => Colors.transparent),
+                                          overlayColor:
+                                          MaterialStateColor.resolveWith(
+                                                  (states) => Colors.transparent)))
+                                ],
+                              )
+                            ],
+                          ),
                         )
                       ],
                     ),
                   )
-                ],
-              ),
+              )
             )));
   }
 
